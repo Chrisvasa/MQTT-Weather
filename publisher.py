@@ -1,6 +1,5 @@
 import random
 import paho.mqtt.client as mqtt
-import pymongo
 import time
 
 # Generates fake weather data and publishes it to the broker
