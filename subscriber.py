@@ -1,20 +1,32 @@
 import paho.mqtt.subscribe as subscribe
-import pymongo
-import time
+from pymongo import MongoClient
 
-# Creates a client that connects to the broker
+user = "{usernamehere}" # Replace with your username
+password = "{passwordhere}" # Replace with your password
+uri = f"{urlhere}"
+client = MongoClient(uri)
+db = client["weather_data"]
+coll = db["weather"]
+
+weatherdata = []
+# Subscribes to the broker and listens for the different weather topics
 def Main():
     print("Connecting to broker")
     subscribe.callback(callback=on_message, topics="weathervasa/WeatherForecast/#", hostname="test.mosquitto.org")
 
-def on_connect(client, userdata, flags, rc):
-    if rc==0:
-        print("connected OK Returned code=",rc)
-        client.subscribe("weathervasa/#")
-    else:
-        print("Bad connection Returned code=",rc)
-
+# When a weather topic gets updated, this gets called
+# Formats the incoming payload, and appends it to a list of dicts
+# Then combines the three different items into one dict and adds it to the DB
 def on_message(client, userdata, msg):
-    print(msg.topic+" "+str(msg.payload))
+    if(len(weatherdata) >= 3):
+        result = {}
+        for d in weatherdata:
+            result.update(d)
+        x = coll.insert_one(result)
+        print("Post success:",x.acknowledged)
+        weatherdata.clear()
+    topic = msg.topic.split("/")
+    data = msg.payload.decode("utf-8")
+    weatherdata.append({f"{topic[2]}": f'{data}'})
 
 Main()

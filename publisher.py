@@ -8,18 +8,16 @@ def Main():
     broker = "test.mosquitto.org"
 
     client.on_connect=on_connect
-    client.on_message=on_message
     client.connect(broker)
     client.loop_start()
 
     weatherdata = [] # List for weather data
-    for i in range(10):
+    for i in range(10): # Each loop this generates new weather data, publishes it then waits 5 seconds
         weatherdata.append(Weather())
         for data in weatherdata:
-            client.publish(topic="weathervasa/WeatherForecast/Degrees",payload=f"{data.degrees}C")
-            client.publish(topic="weathervasa/WeatherForecast/Humidity",payload=f"{data.humidity}%")
+            client.publish(topic="weathervasa/WeatherForecast/Degrees",payload=f"{data.degrees}")
+            client.publish(topic="weathervasa/WeatherForecast/Humidity",payload=f"{data.humidity}")
             client.publish(topic="weathervasa/WeatherForecast/Weather",payload=f"{data.weather}")
-            client.on_message=on_message
             time.sleep(5)
         weatherdata.pop()
     client.loop_stop()
@@ -39,8 +37,5 @@ def on_connect(client, userdata, flags, rc):
         print("connected OK Returned code=",rc)
     else:
         print("Bad connection Returned code=",rc)
-
-def on_message(client, userdata, msg):
-    print(msg.topic+" "+str(msg.payload))
 
 Main()
