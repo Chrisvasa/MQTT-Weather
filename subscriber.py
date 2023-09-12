@@ -1,5 +1,5 @@
-from requests import post
 import paho.mqtt.client as mqtt
+import paho.mqtt.subscribe as subscribe
 import pymongo
 import time
 
@@ -20,9 +20,8 @@ client.on_connect=on_connect
 client.on_message=on_message
 client.connect(broker)
 
-# client.loop_start()
 print("Connecting to broker")
-client.publish(topic="weathervasa/test",payload="Robert är en riktig noob")
-time.sleep(4)
-
-# client.loop_stop()
+test = client.subscribe(topic="weathervasa/WeatherForecast/#")
+print(test)
+time.sleep(5)
+client.loop_forever()

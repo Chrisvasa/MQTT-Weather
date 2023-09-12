@@ -23,7 +23,7 @@ def Main():
             client.on_message=on_message
             time.sleep(5)
         weatherdata.pop()
-    client.loop_end()
+    client.loop_stop()
 
 # Class that randomizes weather data
 class Weather():
@@ -43,4 +43,5 @@ def on_connect(client, userdata, flags, rc):
 
 def on_message(client, userdata, msg):
     print(msg.topic+" "+str(msg.payload))
+
 Main()
