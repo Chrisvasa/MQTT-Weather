@@ -1,3 +1,4 @@
+
 # Weather Data Collector and Publisher
 
 This project consists of two Python scripts that work together to collect weather data and publish it to an MQTT broker. The collected data is then stored in a MongoDB database for further analysis or use.
@@ -35,11 +36,12 @@ Before running the scripts, ensure you have the following dependencies installed
 
 1. **Clone this repository:**
 
-``` git clone https://github.com/Chrisvasa/MQTT-Weather.git
-cd MQTT-Weather ```
+
+``git clone https://github.com/Chrisvasa/MQTT-Weather.git
+cd MQTT-Weather``
 
 
-2. **Modify the scripts as needed:**
+3. **Modify the scripts as needed:**
 
 - Replace the placeholders `{usernamehere}`, `{passwordhere}`, and `{urlhere}` in `subscriber.py` with your MongoDB credentials and connection URI.
 - You can customize the MQTT broker settings (e.g., broker URL, topics) in both scripts as per your requirements.
