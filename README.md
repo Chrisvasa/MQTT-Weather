@@ -35,8 +35,7 @@ Before running the scripts, ensure you have the following dependencies installed
 
 1. **Clone this repository:**
 
-``` bash 
-git clone https://github.com/Chrisvasa/MQTT-Weather.git
+``` git clone https://github.com/Chrisvasa/MQTT-Weather.git
 cd MQTT-Weather ```
 
 
